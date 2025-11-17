@@ -1,6 +1,5 @@
 import streamlit as st
-import json
-from scripts import ollama_utils
+from lib import helper_ollama
 
 def show():
     st.header("🦙 Ollama Python SDK Basics")
@@ -134,7 +133,7 @@ import ollama
 models = ollama.list()
 
 for model in models['models']:
-    print(f"Name: {model['name']}")
+    print(f"Name: {model['modelÄ]}")
     print(f"Size: {model['size']}")
     print(f"Modified: {model['modified_at']}")
     print("---")
@@ -271,22 +270,25 @@ except Exception as e:
         st.markdown("**Test your Ollama setup:**")
         
         if st.button("Check Ollama Status", key="check_ollama"):
-            status_info = ollama_utils.check_ollama_status()
-            
             with st.spinner("Checking Ollama..."):
-                if status_info['status'] == 'success':
-                    st.success(f"✅ {status_info['message']}")
-                    st.write(f"Available models: {len(status_info['models'])}")
+                state = helper_ollama.check_ollama_status()
+            
+                print(state)
+
+
+                if state['status'] == 'success':
+                    st.success(f"✅ {state['message']}")
+                    st.write(f"Available models: {len(state['models'])}")
                     
-                    if status_info['models']:
+                    if state['models']:
                         st.markdown("**Your Models:**")
-                        for model in status_info['models']:
-                            st.write(f"- {model['name']}")
+                        for model in state['models']:
+                            st.write(f"- {model['model']}")
                     else:
                         st.info("No models found. Run `ollama pull llama2` to get started!")
                 else:
-                    st.error(f"❌ {status_info['message']}")
-                    if 'SDK not installed' not in status_info['message']:
+                    st.error(f"❌ {state['message']}")
+                    if 'SDK not installed' not in state['message']:
                         st.info("Make sure Ollama is running. Visit https://ollama.ai for installation.")
     
     with col2:
@@ -302,7 +304,7 @@ try:
     print(f"Models: {len(models['models'])}")
     
     for model in models['models']:
-        print(f"- {model['name']}")
+        print(f"- {model['model']}")
         
 except Exception as e:
     print(f"❌ Error: {e}")
