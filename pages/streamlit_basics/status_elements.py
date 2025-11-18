@@ -1,5 +1,0 @@
-st.success("Success message!")
-st.info("Info message")
-st.warning("Warning message")
-st.error("Error message")
-st.exception(Exception("This is an exception"))

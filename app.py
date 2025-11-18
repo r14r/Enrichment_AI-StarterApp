@@ -1,5 +1,7 @@
 import streamlit as st
 
+from lib.helper_streamlit import build_navigation
+
 # Page configuration
 st.set_page_config(
     page_title="AI Starter App",
@@ -11,8 +13,6 @@ st.set_page_config(
 # Main title
 st.title("🤖 Streamlit/Ollama Starter App")
 
+pages = build_navigation()
 
-st.sidebar.info(
-    "This is a starter application showcasing Python, Streamlit, "
-    "and Ollama integration examples."
-)
+st.navigation(pages).run()

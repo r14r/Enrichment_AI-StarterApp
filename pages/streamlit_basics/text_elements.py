@@ -1,6 +1,0 @@
-st.title("This is a title")
-st.header("This is a header")
-st.subheader("This is a subheader")
-st.text("This is plain text")
-st.markdown("This is **markdown** with *formatting*")
-st.caption("This is a caption")
